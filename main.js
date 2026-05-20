@@ -95,6 +95,40 @@ closeModal.addEventListener("click", () => {
 }
 );
 
+
+// const bookTitle = document.getElementById("bookTitle");
+// bookTitle.addEventListener("invalid", (e) => {
+//     if (bookTitle.validity.valueMissing) {
+//         bookTitle.setCustomValidity("Book title is required");
+//     }
+// });
+
+// bookTitle.addEventListener("input", (e) => {
+//     bookTitle.setCustomValidity('');
+// });
+
+const validationMessages = {
+    bookTitle: "Book title is required",
+    bookAuthor: "Author is required",
+    bookPages: "Page number is required",
+};
+
+Object.entries(validationMessages).forEach(([id, message]) => {
+    const input = document.getElementById(id)
+
+    input.addEventListener("invalid", () => {
+        if (input.validity.valueMissing) {
+        input.setCustomValidity(message);
+        }
+    });
+
+    input.addEventListener("input", () => {
+        input.setCustomValidity("");
+    });
+});
+
+
+
 addBookForm.addEventListener('submit', function (event) {
     event.preventDefault();
 
@@ -103,7 +137,7 @@ addBookForm.addEventListener('submit', function (event) {
     const author = formData.get("author");
     const pages = formData.get("pages");
     const status = formData.get("status");
-    
+
     addBookToLibrary(title, author, pages, status);
     dialog.close();
 });
@@ -121,3 +155,4 @@ addBookToLibrary("A Sand County Almanac", "Aldo Leopold", 240, false);
 addBookToLibrary("Gravity's Rainbow", "Thomas Pynchon", 760, false);
 
 displayLibrary();
+
